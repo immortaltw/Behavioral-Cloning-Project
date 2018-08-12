@@ -42,15 +42,15 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. Solution Design Approach
 
-I use a convolution neural network model similar to Lenet (line 98)as starting point. It's relatively simple and fast to train. However, the model was only good enough to make the car run for 1/2 lap in autonomous mode.
+I use a convolution neural network model similar to Lenet (line 126)as starting point. It's relatively simple and fast to train. However, the model was only good enough to make the car run for 1/2 lap in autonomous mode.
 
-I split my image and steering angle data into a training and validation set with 80/20 ratio. In the beginning I set the epochs to 7. But 7 seemed too big because the validation error began to fluctuate after epoch 5. So I set the epochs to 5 for this model.
+I split my image and steering angle data into a training and validation set with 80/20 ratio. In the beginning I set the epochs to 7. But 7 seemed too big because the validation error began to fluctuate after epoch 5. So I set the epochs to 3 for this model.
 
 #### 2. Final Model Architecture
 
-Because the Lenet model was not good enough, I tried to use Nvidia's model but with some slight difference (line 60). The model I used have 5 CNN layers with kernal sizes identical to Nvidia's network arch. I added one max pooling layer after the first CNN, and another max pooling and a dropout (0.25).
+Because the Lenet model was not good enough, I tried to use Nvidia's model but with some slight difference (line 94). The model I used have 5 CNN layers with kernal sizes identical to Nvidia's network arch. I added one max pooling layer after the first CNN, and another max pooling and a dropout (0.25).
 
-Unlike Nivdia's model, which has 4 fully connected layer, I used 3 plus a dropout layer instead. I found that the model file size is too big if using Nvidia's model, so I remove one fully connected layer. The validation error of this model began to fluctuate after epoch 2, so I set epochs to 2 to avoid overfitting.
+Unlike Nivdia's model, which has 4 fully connected layer, I add a dropout layer after the first fully connected layer. I also added 3 max pooling layer in between. The validation error of this model began to fluctuate after epoch 4, so I set epochs to 3 to avoid overfitting.
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track, basically the region after crossing the bridge. To improve it I simply record 2 more runs specifically for this region and use it as part of training data set.
 
@@ -80,4 +80,4 @@ I finally randomly shuffled the data set and put 20% of the data into a validati
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 2 as evidenced by observing the validation error per epoch during training. I used an adam optimizer with learning rate 0.001 and 0.0001 decay value.
 
-As a side note, I tried to use generator but it made the training so slow. It was way too slow so I gave up.
+As a side note, I tried to use generator but it made the training extremely slow. It was way too slow so I gave up.
